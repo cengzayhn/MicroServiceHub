@@ -42,6 +42,14 @@ class ProductServiceApplicationTests {
 		dymDynamicPropertyRegistry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
 	}
 
+	private ProductRequest getProductRequest() {
+		return ProductRequest.builder()
+				.name("Product One")
+				.description("Product One Description")
+				.price(BigDecimal.valueOf(1300))
+				.build();
+	}
+
 	@Test
 	void shouldCreateProduct() throws Exception {
 		ProductRequest productRequest = getProductRequest();
@@ -51,14 +59,6 @@ class ProductServiceApplicationTests {
 						.content(productRequestString))
 				.andExpect(status().isCreated());
 		Assertions.assertEquals(1, productRepository.findAll().size());
-	}
-
-	private ProductRequest getProductRequest() {
-		return ProductRequest.builder()
-				.name("Product One")
-				.description("Product One Description")
-				.price(BigDecimal.valueOf(1300))
-				.build();
 	}
 
 }
